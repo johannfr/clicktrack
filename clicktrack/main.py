@@ -66,8 +66,20 @@ def main(
 ):
     duration_beat = (60 * 1000) / bpm
     click_high = AudioSegment.from_file(highclick) + gain_click
+    if len(click_high) > duration_beat:
+        print(
+            "Warning: High-pitched click sample is {:.1f}ms longer than 1 beat".format(
+                len(click_high) - duration_beat
+            )
+        )
     click_high_padding = AudioSegment.silent(duration=duration_beat - len(click_high))
     click_low = AudioSegment.from_file(lowclick) + gain_click
+    if len(click_low) > duration_beat:
+        print(
+            "Warning: Low-pitched click sample is {:.1f}ms longer than 1 beat".format(
+                len(click_low) - duration_beat
+            )
+        )
     click_low_padding = AudioSegment.silent(duration=duration_beat - len(click_low))
     click_measure = (
         click_high
