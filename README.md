@@ -7,6 +7,11 @@ A simple program that uses pydub to process a backing-track (padding, paning, ad
 Use pipx. pipx is great.
 
 ```bash
+pip3 install pipx
+```
+
+
+```bash
 pipx install git+https://github.com/johannfr/clicktrack.git
 ```
 
@@ -14,4 +19,10 @@ pipx install git+https://github.com/johannfr/clicktrack.git
 
 ```bash
 clicktrack --help
+```
+
+## Upgrade
+
+```bash
+pipx upgrade clicktrack
 ```
