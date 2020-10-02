@@ -68,10 +68,17 @@ PATH_TO_SELF = os.path.abspath(os.path.dirname(__file__))
     show_default=True,
 )
 @click.option(
-    "--track-padding",
+    "--padding-track",
     default=10,
     type=int,
     help="Padding before backing-track (ms)",
+    show_default=True,
+)
+@click.option(
+    "--padding-click",
+    default=0,
+    type=int,
+    help="Padding before click-track (ms)",
     show_default=True,
 )
 @click.option("-v", "--verbose", is_flag=True)
@@ -89,7 +96,8 @@ def main(
     gain_click,
     pan_track,
     pan_click,
-    track_padding,
+    padding_track,
+    padding_click,
     verbose,
 ):
     duration_beat = (60 * 1000) / bpm
@@ -99,12 +107,12 @@ def main(
     info(verbose, " Done\n")
     info(
         verbose,
-        "Loading and processing backing-track [{}{} dB, {} ms padding]...".format(
-            "+" if gain_track > 0 else "", gain_track, track_padding
+        "Loading and processing backing-track [{}{} dB, {}ms padding]...".format(
+            "+" if gain_track > 0 else "", gain_track, padding_track
         ),
     )
     total_padding = AudioSegment.silent(
-        duration=track_padding + (duration_beat * division * countprefix)
+        duration=padding_track + (duration_beat * division * countprefix)
     )
     track = (
         total_padding + AudioSegment.from_file(backingtrack).pan(pan_track)
@@ -112,10 +120,15 @@ def main(
     info(verbose, " Done\n")
 
     # Generate an empty click-track
-    info(verbose, "Generating click-track [{} BPM, {} div]...".format(bpm, division))
+    info(
+        verbose,
+        "Generating click-track [{} BPM, {} div, {}ms padding]...".format(
+            bpm, division, padding_click
+        ),
+    )
     click_track = AudioSegment.silent(duration=len(track))
     count = 0
-    for i in float_range(0, len(track), duration_beat):
+    for i in float_range(padding_click, len(track), duration_beat):
         click_track = click_track.overlay(
             click_high if count % division == 0 else click_low, position=round(i)
         )
