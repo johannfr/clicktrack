@@ -15,7 +15,7 @@ def info(flag, message):
         sys.stdout.flush()
 
 
-PATH_TO_SELF = os.path.abspath(sys.argv[0])
+PATH_TO_SELF = os.path.abspath(os.path.dirname(__file__))
 
 
 @click.command()
