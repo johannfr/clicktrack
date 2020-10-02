@@ -22,13 +22,13 @@ PATH_TO_SELF = os.path.abspath(os.path.dirname(__file__))
 @click.option("--bpm", default=120, help="Beats per minute")
 @click.option(
     "--highclick",
-    default=os.path.join(PATH_TO_SELF, "cowbell-high.wav"),
+    default=os.path.join(PATH_TO_SELF, "sounds", "cowbell-high.wav"),
     type=click.Path(exists=True),
     help="Path to audio-file for high-pitched click",
 )
 @click.option(
     "--lowclick",
-    default=os.path.join(PATH_TO_SELF, "cowbell-low.wav"),
+    default=os.path.join(PATH_TO_SELF, "sounds", "cowbell-low.wav"),
     type=click.Path(exists=True),
     help="Path to audio-file for low-pitched click",
 )
