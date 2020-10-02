@@ -1,5 +1,5 @@
 import click
-import sys
+import sys, os
 from pydub import AudioSegment
 
 
@@ -15,17 +15,20 @@ def info(flag, message):
         sys.stdout.flush()
 
 
+PATH_TO_SELF = os.path.abspath(sys.argv[0])
+
+
 @click.command()
 @click.option("--bpm", default=120, help="Beats per minute")
 @click.option(
     "--highclick",
-    default="cowbell-high.wav",
+    default=os.path.join(PATH_TO_SELF, "cowbell-high.wav"),
     type=click.Path(exists=True),
     help="Path to audio-file for high-pitched click",
 )
 @click.option(
     "--lowclick",
-    default="cowbell-low.wav",
+    default=os.path.join(PATH_TO_SELF, "cowbell-low.wav"),
     type=click.Path(exists=True),
     help="Path to audio-file for low-pitched click",
 )
